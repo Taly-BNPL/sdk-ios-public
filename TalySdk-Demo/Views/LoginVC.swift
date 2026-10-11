@@ -53,8 +53,8 @@ class LoginVC: UIViewController {
         devlopmentButton.setTitleColor(UIColor.white, for: .normal)
         productionButton.setTitleColor(UIColor.black, for: .normal)
         
-        mailTextField.text = User.userName == "" ? "DemoMerchant#153": User.userName
-        passwordTextField.text = User.password == "" ? "Dem@Merch@nt#2023": User.password
+        mailTextField.text = User.userName
+        passwordTextField.text = User.password
     }
     
     // MARK: user interaction
