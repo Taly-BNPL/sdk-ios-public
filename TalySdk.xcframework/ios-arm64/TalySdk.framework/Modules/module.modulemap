@@ -7,5 +7,4 @@ framework module TalySdk {
 
 module TalySdk.Swift {
   header "TalySdk-Swift.h"
-  requires objc
 }

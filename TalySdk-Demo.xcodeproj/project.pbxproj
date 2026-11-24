@@ -27,8 +27,8 @@
 		2ABAA4BF2A948ED40051D6AE /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABAA4BB2A948ED40051D6AE /* LoginVC.swift */; };
 		2ABAA4C02A948ED40051D6AE /* TalyInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABAA4BC2A948ED40051D6AE /* TalyInfoVC.swift */; };
 		2AE995BF2AA89251009666C3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE995BE2AA89251009666C3 /* User.swift */; };
-		9350185530B6279D00E5D660 /* TalySdk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9350185430B6279D00E5D660 /* TalySdk.xcframework */; };
-		9350185630B6279D00E5D660 /* TalySdk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9350185430B6279D00E5D660 /* TalySdk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9350185530B6279D00E5D660 /* TalySdk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9350182F30B373D100E5D660 /* TalySdk.xcframework */; };
+		9350185630B6279D00E5D660 /* TalySdk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9350182F30B373D100E5D660 /* TalySdk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,7 +69,6 @@
 		2ABAA4BC2A948ED40051D6AE /* TalyInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalyInfoVC.swift; sourceTree = "<group>"; };
 		2AE995BE2AA89251009666C3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9350182F30B373D100E5D660 /* TalySdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TalySdk.xcframework; sourceTree = "<group>"; };
-		9350185430B6279D00E5D660 /* TalySdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TalySdk.xcframework; path = "../sdk-ios/TalySdk/exportFiles/24-11/TalySdk.xcframework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,7 +152,6 @@
 		1FCB3E8B2A93446E0075FAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9350185430B6279D00E5D660 /* TalySdk.xcframework */,
 				9350182F30B373D100E5D660 /* TalySdk.xcframework */,
 			);
 			name = Frameworks;
