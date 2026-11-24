@@ -28,9 +28,11 @@
 			</array>
 		</dict>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>pacimid</string>
+	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>13.0.0</string>
 </dict>
 </plist>

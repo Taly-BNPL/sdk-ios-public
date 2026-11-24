@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
-// swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -enable-experimental-feature OpaqueTypeErasure -enable-bare-slash-regex -module-name TalySdk
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+// swift-compiler-version: Apple Swift version 6.2.3 effective-5.10 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+// swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name TalySdk
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.3
 import CoreTelephony
 import DeveloperToolsSupport
 import Foundation
@@ -21,12 +21,7 @@ public protocol MixpanelType {
   func isValidNestedTypeAndValue() -> Swift.Bool
   func equals(rhs: any TalySdk.MixpanelType) -> Swift.Bool
 }
-#if compiler(>=5.3) && $NoncopyableGenerics
-extension Swift.Optional : TalySdk.MixpanelType {
-  public func isValidNestedTypeAndValue() -> Swift.Bool
-  public func equals(rhs: any TalySdk.MixpanelType) -> Swift.Bool
-}
-#else
+#if compiler(>=5.3) && $NonescapableTypes
 extension Swift.Optional : TalySdk.MixpanelType {
   public func isValidNestedTypeAndValue() -> Swift.Bool
   public func equals(rhs: any TalySdk.MixpanelType) -> Swift.Bool
@@ -99,13 +94,17 @@ extension Swift.Dictionary : TalySdk.MixpanelType {
   open func append(properties: TalySdk.Properties)
   open func remove(properties: TalySdk.Properties)
   open func union(properties: TalySdk.Properties)
+  #if compiler(>=5.3) && $NonescapableTypes
   open func trackCharge(amount: Swift.Double, properties: TalySdk.Properties? = nil)
+  #endif
   open func clearCharges()
   open func deleteUser()
   @objc deinit
 }
 extension UIKit.UIView {
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public func centerXYAnchor(to view: UIKit.UIView, yOffset: CoreFoundation.CGFloat = 0, leftOrRightOffset: CoreFoundation.CGFloat? = nil)
+  #endif
   @_Concurrency.MainActor @preconcurrency public func allEdgeAnchor(to view: UIKit.UIView, top: CoreFoundation.CGFloat = 0, left: CoreFoundation.CGFloat = 0, right: CoreFoundation.CGFloat = 0, bottom: CoreFoundation.CGFloat = 0)
 }
 extension UIKit.UIColor {
@@ -121,7 +120,9 @@ extension UIKit.UIColor {
   @objc deinit
 }
 public struct WebResource {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(withUrlPath urlPath: TalySdk.URLPath, forHttpMethod method: TalySdk.HttpMethods, requestBody: Foundation.Data? = nil, contentType: Swift.String? = "application/x-www-form-urlencoded", isBasicAuthorization: Swift.Bool? = false)
+  #endif
 }
 public struct CommonError : Swift.Codable {
   public let error: Swift.String?
@@ -151,11 +152,15 @@ public struct CommonError : Swift.Codable {
     get
     set
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public static var languageCode: Swift.String? {
     get
     set
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public static func updateProperties(token: Swift.String? = nil, expiresIn: Swift.Int? = nil, userName: Swift.String? = nil, password: Swift.String? = nil, languageCode: Swift.String? = nil, environment: Swift.String? = nil)
+  #endif
   public static func convertIntoString<T>(_ value: T) -> Swift.String where T : Swift.Decodable, T : Swift.Encodable
   @objc deinit
 }
@@ -195,15 +200,21 @@ public enum AppError : Swift.Error {
   case custom(Swift.String, Swift.String?, Swift.String?)
 }
 extension TalySdk.AppError {
+  #if compiler(>=5.3) && $NonescapableTypes
   public var status: Swift.String? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public var errorMessage: Swift.String? {
     get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public var apiName: Swift.String? {
     get
   }
+  #endif
 }
 public enum AppResult<T, A> {
   case value(T)
@@ -229,7 +240,6 @@ public struct OrderDetail : Swift.Codable {
   public let paymentPlanName: Swift.String?
   public let branchType: Swift.String
   public let branchName: Swift.String
-  public let settlementType: Swift.String?
   public let totalReturnAmount: Swift.Double?
   public let totalRefundAmount: Swift.Double?
   public let merchantId: Swift.Int
@@ -238,13 +248,19 @@ public struct OrderDetail : Swift.Codable {
   public let talyOrderId: Swift.Int?
   public let merchantOrderId: Swift.String
   public let totalAmount: Swift.Double?
+  public let finalAmount: Swift.Double?
   public let settlementStatus: Swift.String?
+  public let platform: Swift.String?
+  public let purchaseType: Swift.String?
+  public let cardType: Swift.String?
+  public let discountAmount: Swift.Double?
+  public let orderItems: [TalySdk.OrderItem]?
   public let psp: TalySdk.PSP?
   public let postBackUrl: Swift.String?
   public let merchantLogo: Swift.String?
+  public init(from decoder: any Swift.Decoder) throws
   public func convertoSucessModel() -> TalySdk.OrderDetails
   public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
 }
 public struct OrderDetails : Swift.Codable {
   public let orderToken: Swift.String
@@ -256,7 +272,6 @@ public struct OrderDetails : Swift.Codable {
   public let paymentPlanName: Swift.String?
   public let branchType: Swift.String
   public let branchName: Swift.String
-  public let settlementType: Swift.String?
   public let totalReturnAmount: Swift.Double?
   public let totalRefundAmount: Swift.Double?
   public let merchantId: Swift.Int
@@ -265,7 +280,13 @@ public struct OrderDetails : Swift.Codable {
   public let talyOrderId: Swift.Int?
   public let merchantOrderId: Swift.String
   public let totalAmount: Swift.Double?
+  public let finalAmount: Swift.Double?
   public let settlementStatus: Swift.String?
+  public let platform: Swift.String?
+  public let purchaseType: Swift.String?
+  public let cardType: Swift.String?
+  public let discountAmount: Swift.Double?
+  public let orderItems: [TalySdk.OrderItem]?
   public let psp: TalySdk.PSP?
   public let postBackUrl: Swift.String?
   public let merchantLogo: Swift.String?
@@ -283,7 +304,9 @@ public struct OtherErrorResponse : Swift.Codable {
   public let errors: [Swift.String]
   public var errorCode: Swift.String?
   public let merchantOrderId: Swift.String?
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(status: Swift.String, message: Swift.String, errors: [Swift.String], errorCode: Swift.String? = nil, merchantOrderId: Swift.String?)
+  #endif
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -307,16 +330,10 @@ public struct TokenRequest : Swift.Codable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
-public protocol MixpanelProxyServerDelegate : AnyObject {
-  func mixpanelResourceForProxyServer(_ name: Swift.String) -> TalySdk.ServerProxyResource?
-}
 public protocol MixpanelDelegate : AnyObject {
   func mixpanelWillFlush(_ mixpanel: TalySdk.MixpanelInstance) -> Swift.Bool
 }
 public typealias Properties = [Swift.String : any TalySdk.MixpanelType]
-public struct ProxyServerConfig {
-  public init?(serverUrl: Swift.String, delegate: (any TalySdk.MixpanelProxyServerDelegate)? = nil)
-}
 @_hasMissingDesignatedInitializers open class MixpanelInstance : Swift.CustomDebugStringConvertible {
   open var apiToken: Swift.String
   weak open var delegate: (any TalySdk.MixpanelDelegate)?
@@ -340,15 +357,10 @@ public struct ProxyServerConfig {
     get
     set
   }
-  open var flushBatchSize: Swift.Int {
-    get
-    set
-  }
   open var serverURL: Swift.String {
     get
     set
   }
-  weak open var proxyServerDelegate: (any TalySdk.MixpanelProxyServerDelegate)?
   open var debugDescription: Swift.String {
     get
   }
@@ -368,19 +380,31 @@ public struct ProxyServerConfig {
   @objc deinit
 }
 extension TalySdk.MixpanelInstance {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func identify(distinctId: Swift.String, usePeople: Swift.Bool = true, completion: (() -> Swift.Void)? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func createAlias(_ alias: Swift.String, distinctId: Swift.String, usePeople: Swift.Bool = true, andIdentify: Swift.Bool = true, completion: (() -> Swift.Void)? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func reset(completion: (() -> Swift.Void)? = nil)
+  #endif
 }
 extension TalySdk.MixpanelInstance {
   public func archive()
 }
 extension TalySdk.MixpanelInstance {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func flush(performFullFlush: Swift.Bool = false, completion: (() -> Swift.Void)? = nil)
+  #endif
 }
 extension TalySdk.MixpanelInstance {
+  #if compiler(>=5.3) && $NonescapableTypes
   public func track(event: Swift.String?, properties: TalySdk.Properties? = nil)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func trackWithGroups(event: Swift.String?, properties: TalySdk.Properties? = nil, groups: TalySdk.Properties?)
+  #endif
   public func getGroup(groupKey: Swift.String, groupID: any TalySdk.MixpanelType) -> TalySdk.Group
   public func time(event: Swift.String)
   public func eventElapsedTime(event: Swift.String) -> Swift.Double
@@ -389,14 +413,18 @@ extension TalySdk.MixpanelInstance {
   public func currentSuperProperties() -> [Swift.String : Any]
   public func clearSuperProperties()
   public func registerSuperProperties(_ properties: TalySdk.Properties)
+  #if compiler(>=5.3) && $NonescapableTypes
   public func registerSuperPropertiesOnce(_ properties: TalySdk.Properties, defaultValue: (any TalySdk.MixpanelType)? = nil)
+  #endif
   public func unregisterSuperProperty(_ propertyName: Swift.String)
   public func setGroup(groupKey: Swift.String, groupID: any TalySdk.MixpanelType)
   public func setGroup(groupKey: Swift.String, groupIDs: [any TalySdk.MixpanelType])
   public func addGroup(groupKey: Swift.String, groupID: any TalySdk.MixpanelType)
   public func removeGroup(groupKey: Swift.String, groupID: any TalySdk.MixpanelType)
   public func optOutTracking()
+  #if compiler(>=5.3) && $NonescapableTypes
   public func optInTracking(distinctId: Swift.String? = nil, properties: TalySdk.Properties? = nil)
+  #endif
   public func hasOptedOutTracking() -> Swift.Bool
 }
 public class MXPanelViewModel {
@@ -413,8 +441,12 @@ extension TalySdk.MXPanelViewModel {
   public func createOrderFailure(requestData: TalySdk.OrderRequest, errorCode: Swift.String, errorResponse: TalySdk.OtherErrorResponse)
   public func webviewOrderStatus(requestData: TalySdk.OrderRequest, createOrderResponse: TalySdk.CreateOrderResponse, status: Swift.String)
   public func orderDetailsServiceCalled(merchantOrderId: Swift.String, talyOrderId: Swift.String)
+  #if compiler(>=5.3) && $NonescapableTypes
   public func orderDetailsSucess(orderDetail: TalySdk.OrderDetails, customerEmail: Swift.String?, requestData: TalySdk.OrderRequest)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   public func orderDetailsFailure(requestData: TalySdk.OrderRequest, talyOrderId: Swift.String?, statusCode: Swift.String?, errorMessage: Swift.String?, errorResponse: TalySdk.OtherErrorResponse)
+  #endif
   public func orderSuccessCallback(callbackData: TalySdk.OrderDetails, marchantOrderId: Swift.String)
   public func orderFailureCallback(orderDetails: TalySdk.OrderDetails, marchantOrderId: Swift.String)
   public func orderErrorCallback(callbackData: TalySdk.OtherErrorResponse, marchantOrderId: Swift.String)
@@ -463,28 +495,38 @@ public struct OrderRequest : Swift.Codable {
   public var isMobile: Swift.Bool
   public let postBackUrl: Swift.String?
   public let merchantLogo: Swift.String?
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(merchantOrderId: Swift.String, language: Swift.String = "en", subtotal: Swift.Double, totalAmount: Swift.Double, currency: Swift.String, discountAmount: Swift.Double, taxAmount: Swift.Double, deliveryAmount: Swift.Double, deliveryMethod: Swift.String, otherFees: Swift.Double? = nil, psp: TalySdk.PSP? = nil, orderItems: [TalySdk.OrderItem], isDigitalOrder: Swift.Bool = false, customerDetails: TalySdk.CustomerDetails? = nil, deliveryAddress: TalySdk.DeliveryAddress? = nil, merchantRedirectURL: Swift.String, postBackUrl: Swift.String? = nil, merchantLogo: Swift.String? = nil)
+  #endif
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
 public struct PSP : Swift.Codable {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(isPspOrder: Swift.Bool = false, pspProvider: Swift.String? = nil, subMerchantId: Swift.Int? = nil, subMerchantName: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
+  #endif
   public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
 }
 public struct OrderItem : Swift.Codable {
-  public init(sku: Swift.String, type: Swift.String? = nil, name: Swift.String, itemDescription: Swift.String? = nil, nameArabic: Swift.String, itemDescriptionArabic: Swift.String? = nil, quantity: Swift.Int, itemPrice: Swift.Double, imageUrl: Swift.String? = nil, itemUrl: Swift.String? = nil, itemUnit: Swift.String? = nil, itemSize: Swift.String? = nil, itemColor: Swift.String? = nil, itemGender: Swift.String? = nil, itemBrand: Swift.String? = nil, itemCategory: Swift.String? = nil, currency: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init(sku: Swift.String, type: Swift.String? = nil, name: Swift.String, itemDescription: Swift.String? = nil, quantity: Swift.Int, itemPrice: Swift.Double, imageUrl: Swift.String? = nil, itemUrl: Swift.String? = nil, itemUnit: Swift.String? = nil, itemSize: Swift.String? = nil, itemColor: Swift.String? = nil, itemGender: Swift.String? = nil, itemBrand: Swift.String? = nil, itemCategory: Swift.String? = nil, currency: Swift.String? = nil, nameArabic: Swift.String? = nil, itemDescriptionArabic: Swift.String? = nil, orderId: Swift.Int? = nil)
+  #endif
   public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
 }
 public struct CustomerDetails : Swift.Codable {
   public var customerEmail: Swift.String?
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(firstName: Swift.String? = nil, lastName: Swift.String? = nil, gender: Swift.String? = nil, countryCode: Swift.String? = nil, phoneNumber: Swift.String? = nil, customerEmail: Swift.String? = nil, registeredSince: Swift.String? = nil, loyaltyMember: Swift.Bool? = nil, loyaltyLevel: Swift.String? = nil)
+  #endif
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
 public struct DeliveryAddress : Swift.Codable {
+  #if compiler(>=5.3) && $NonescapableTypes
   public init(city: Swift.String? = nil, area: Swift.String? = nil, fullAddress: Swift.String? = nil, phoneNumber: Swift.String? = nil, customerEmail: Swift.String? = nil)
+  #endif
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -520,20 +562,17 @@ extension Swift.String {
   @objc deinit
 }
 @_hasMissingDesignatedInitializers open class Mixpanel {
+  #if compiler(>=5.3) && $NonescapableTypes
   @discardableResult
   open class func initialize(token apiToken: Swift.String, trackAutomaticEvents: Swift.Bool, flushInterval: Swift.Double = 60, instanceName: Swift.String? = nil, optOutTrackingByDefault: Swift.Bool = false, useUniqueDistinctId: Swift.Bool = false, superProperties: TalySdk.Properties? = nil, serverURL: Swift.String? = nil) -> TalySdk.MixpanelInstance
-  @discardableResult
-  open class func initialize(token apiToken: Swift.String, trackAutomaticEvents: Swift.Bool, flushInterval: Swift.Double = 60, instanceName: Swift.String? = nil, optOutTrackingByDefault: Swift.Bool = false, useUniqueDistinctId: Swift.Bool = false, superProperties: TalySdk.Properties? = nil, proxyServerConfig: TalySdk.ProxyServerConfig) -> TalySdk.MixpanelInstance
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   open class func getInstance(name: Swift.String) -> TalySdk.MixpanelInstance?
+  #endif
   open class func mainInstance() -> TalySdk.MixpanelInstance
   open class func setMainInstance(name: Swift.String)
   open class func removeInstance(name: Swift.String)
   @objc deinit
-}
-public struct ServerProxyResource {
-  public init(queryItems: [Foundation.URLQueryItem]? = nil, headers: [Swift.String : Swift.String])
-  public let queryItems: [Foundation.URLQueryItem]?
-  public let headers: [Swift.String : Swift.String]
 }
 @objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class PlaceOrderView : UIKit.UIViewController, WebKit.WKUIDelegate {
   @_Concurrency.MainActor @preconcurrency weak public var delegate: (any TalySdk.PlaceOrderDelegate)?
@@ -545,15 +584,32 @@ public struct ServerProxyResource {
     get
     set
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency public init(orderRequest: TalySdk.OrderRequest, tokenRequest: TalySdk.TokenRequest, environment: TalySdk.URLHost, languageCode: Swift.String? = "en")
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  #endif
   @objc deinit
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func observeValue(forKeyPath keyPath: Swift.String?, of object: Any?, change: [Foundation.NSKeyValueChangeKey : Any]?, context: Swift.UnsafeMutableRawPointer?)
+  #endif
 }
 extension TalySdk.PlaceOrderView : WebKit.WKNavigationDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationAction: WebKit.WKNavigationAction, decisionHandler: @escaping (WebKit.WKNavigationActionPolicy) -> Swift.Void)
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, didFinish navigation: WebKit.WKNavigation!)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, didCommit navigation: WebKit.WKNavigation!)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, didStartProvisionalNavigation navigation: WebKit.WKNavigation!)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, didFail navigation: WebKit.WKNavigation!, withError error: any Swift.Error)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func webView(_ webView: WebKit.WKWebView, didFailProvisionalNavigation navigation: WebKit.WKNavigation!, withError error: any Swift.Error)
+  #endif
 }
 public enum URLPath {
   case token(username: Swift.String, password: Swift.String, grantType: Swift.String, scope: Swift.String)
@@ -563,7 +619,6 @@ public enum URLPath {
   case createOrder
   case getOrderDetail(id: Swift.Int)
   case bannerRequest
-  case howItWorks(price: Swift.String, language: Swift.String)
 }
 extension TalySdk.URLPath {
   public var path: Swift.String {
@@ -600,7 +655,9 @@ public struct WebServiceManager {
 public enum HttpMethods : Swift.String {
   case get
   case post
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
@@ -615,7 +672,9 @@ public enum URLHost : Swift.String {
   public var environment: Swift.String {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.String)
+  #endif
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
