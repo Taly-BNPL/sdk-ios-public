@@ -68,9 +68,7 @@
 		2ABAA4BB2A948ED40051D6AE /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		2ABAA4BC2A948ED40051D6AE /* TalyInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalyInfoVC.swift; sourceTree = "<group>"; };
 		2AE995BE2AA89251009666C3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		9350182F30B373D100E5D660 /* TalySdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TalySdk.xcframework; path = "../TalySdk/exportFiles/24-11/TalySdk.xcframework"; sourceTree = "<group>"; };
-		9350183C30B4C38200E5D660 /* TalySdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TalySdk.xcframework; path = "../TalySdk/exportFiles/22:9/TalySdk.xcframework"; sourceTree = "<group>"; };
-		9350184330B4C60200E5D660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../TalySdk/exportFiles/24-11/TalySdk.xcframework/Info.plist"; sourceTree = "<group>"; };
+		9350182F30B373D100E5D660 /* TalySdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TalySdk.xcframework; path = TalySdk.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,8 +152,6 @@
 		1FCB3E8B2A93446E0075FAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9350184330B4C60200E5D660 /* Info.plist */,
-				9350183C30B4C38200E5D660 /* TalySdk.xcframework */,
 				9350182F30B373D100E5D660 /* TalySdk.xcframework */,
 			);
 			name = Frameworks;
