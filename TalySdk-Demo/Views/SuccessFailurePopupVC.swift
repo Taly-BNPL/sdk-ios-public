@@ -2,14 +2,13 @@
 //  SuccessFailurePopupVC.swift
 //  PaymentDemoApp
 //
-//  Created by Taly on 21/06/23.
+//  Created by Mehul Goswami on 21/06/23.
 //
 import UIKit
 import TalySdk
 
 class SuccessFailurePopupVC: UIViewController {
     
-    // MARK: - variables
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var orderIdLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
@@ -19,19 +18,19 @@ class SuccessFailurePopupVC: UIViewController {
     
     var data: SuccessFailureDetail?
     
-    // MARK: - view methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setTitleAndImage()
     }
     
-    deinit {
-        debugPrint("Deinit called from SuccessFailurePopupVC")
+    @IBAction func closeAction() {
+        self.dismissView()
+        
     }
     
-    // MARK: set screen and data
     func setTitleAndImage() {
+        
         if let value = data {
             self.titleLabel.text = value.headerTitle
             if let orderDetail = value.orderDetails {
@@ -76,9 +75,8 @@ class SuccessFailurePopupVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: user interaction
-    @IBAction func closeAction() {
-        self.dismissView()
+    deinit {
+        debugPrint("Deinit called from SuccessFailurePopupVC")
     }
 }
 

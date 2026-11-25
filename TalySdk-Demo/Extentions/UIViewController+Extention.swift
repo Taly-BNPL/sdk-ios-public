@@ -2,7 +2,7 @@
 //  File.swift
 //  PaymentDemoApp
 //
-//  Created by Taly on 21/06/23.
+//  Created by Mehul Goswami on 21/06/23.
 //
 
 import UIKit
@@ -18,4 +18,3 @@ extension UIViewController {
         presentAlert(alert)
     }
 }
-
