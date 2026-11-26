@@ -10,59 +10,37 @@ import Security
 
 class User {
     private static let userDefaults = UserDefaults.standard
-    private static let legacyPasswordKey = "password"
+    private static let accessTokenAccount = "checkoutAccessToken"
 
-    static var userName: String {
+    /// Short-lived bearer token from the merchant server. The demo does not store a merchant password.
+    static var accessToken: String {
         get {
-            return userDefaults.string(forKey: "userName") ?? ""
+            KeychainSecret.read(account: accessTokenAccount) ?? ""
         }
         set {
-            userDefaults.set(newValue, forKey: "userName")
-        }
-    }
-
-    static var password: String {
-        get {
-            if let storedPassword = KeychainPassword.read() {
-                deleteLegacyPassword()
-                return storedPassword
-            }
-
-            let legacyPassword = userDefaults.string(forKey: legacyPasswordKey) ?? ""
-            if legacyPassword.isEmpty {
-                return ""
-            }
-
-            if KeychainPassword.save(legacyPassword) {
-                deleteLegacyPassword()
-            }
-            return legacyPassword
-        }
-        set {
-            deleteLegacyPassword()
             if newValue.isEmpty {
-                KeychainPassword.delete()
+                KeychainSecret.delete(account: accessTokenAccount)
             } else {
-                KeychainPassword.save(newValue)
+                KeychainSecret.save(newValue, account: accessTokenAccount)
             }
         }
     }
 
-    /// Removes a password written by older builds. UserDefaults stores this value in plaintext.
-    private static func deleteLegacyPassword() {
-        guard userDefaults.object(forKey: legacyPasswordKey) != nil else {
-            return
-        }
-        userDefaults.removeObject(forKey: legacyPasswordKey)
+    /// Drops merchant passwords saved by older demo builds.
+    static func deleteStoredMerchantSecrets() {
+        userDefaults.removeObject(forKey: "password")
+        userDefaults.removeObject(forKey: "userName")
+        userDefaults.removeObject(forKey: "clientId")
+        KeychainSecret.delete(account: "merchantPassword")
+        KeychainSecret.delete(account: "merchantClientSecret")
+        KeychainSecret.delete(account: "password")
     }
-
 }
 
-private enum KeychainPassword {
+private enum KeychainSecret {
     private static let service = "com.Taly.sdkTest"
-    private static let account = "merchantPassword"
 
-    private static var query: [String: Any] {
+    private static func query(account: String) -> [String: Any] {
         [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -70,8 +48,8 @@ private enum KeychainPassword {
         ]
     }
 
-    static func read() -> String? {
-        var readQuery = query
+    static func read(account: String) -> String? {
+        var readQuery = query(account: account)
         readQuery[kSecReturnData as String] = true
         readQuery[kSecMatchLimit as String] = kSecMatchLimitOne
 
@@ -84,14 +62,15 @@ private enum KeychainPassword {
     }
 
     @discardableResult
-    static func save(_ password: String) -> Bool {
-        let data = Data(password.utf8)
+    static func save(_ secret: String, account: String) -> Bool {
+        let data = Data(secret.utf8)
         let attributes: [String: Any] = [
             kSecValueData as String: data,
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
         ]
 
-        let updateStatus = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+        let baseQuery = query(account: account)
+        let updateStatus = SecItemUpdate(baseQuery as CFDictionary, attributes as CFDictionary)
         if updateStatus == errSecSuccess {
             return true
         }
@@ -99,14 +78,14 @@ private enum KeychainPassword {
             return false
         }
 
-        var addQuery = query
+        var addQuery = baseQuery
         for (key, value) in attributes {
             addQuery[key] = value
         }
         return SecItemAdd(addQuery as CFDictionary, nil) == errSecSuccess
     }
 
-    static func delete() {
-        SecItemDelete(query as CFDictionary)
+    static func delete(account: String) {
+        SecItemDelete(query(account: account) as CFDictionary)
     }
 }

@@ -23,10 +23,9 @@ The example app serves as a simple online shopping application that highlights t
 ## 2. Initialize io.taly
 Import TalySdk into viewController, and initialize TalySdk with
 
-   Begin by initializing the Taly SDK with the necessary credentials. You'll need the following information:
+   The customer app must not contain the merchant sign-in credentials. Your server calls Taly to mint a short-lived access token, then the app passes only that token to the SDK.
 
-   * **Username**: Your username for authentication.
-   * **Password**: Your password for authentication.
+   * **Access token**: A bearer token from your server. It is not the merchant password.
    * **Environment**: Choose between Environment.Development for development and testing, or Environment.Production for the live app. 
 
 ```swift
@@ -34,11 +33,8 @@ import TalySdk
 
 func xyzMethod() {
 ...
-    // Replace the following lines with your actual data
-    
-    let tokenRequest = TokenRequest(username: "YOUR_USER_NAME",                                 password: "YOUR_PASSWORD", 
-                                    grantType: "password", 
-                                    scope: "api")
+    // Token minted by your backend. Do not put merchant sign-in credentials in the app.
+    let accessToken = "ACCESS_TOKEN_FROM_YOUR_SERVER"
 
     let psp = PSP(isPspOrder: true, 
                   pspProvider: "",
@@ -98,8 +94,8 @@ func xyzMethod() {
                                     postBackUrl: "https://yourmerchant.com/yourWebwebhookEndpoint/",
                                     merchantLogo: "https://www.yourmerchant.com/media/merchantLogo.png")
 
-    let viewController = PlaceOrderView(orderRequest:orderRequest,
-                                        tokenRequest: tokenRequest,
+    let viewController = PlaceOrderView(orderRequest: orderRequest,
+                                        accessToken: accessToken,
                                         environment: userData.environment == "Development" ? URLHost.dev : URLHost.production)
 
         Then set the delegate on the viewController:
@@ -145,12 +141,12 @@ Integrate the Banner view into your Product Detail screen to offer users a compr
 
     ```
     var sdkBannerView = BannerView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 58),
-                                   userName: "YOUR_USER_NAME",
-                                   password: "YOUR_PASSWORD",
+                                   accessToken: "ACCESS_TOKEN_FROM_YOUR_SERVER",
                                    name: "",
                                    quantity: 1,
                                    amount: "YOUR_AMOUNT",
-                                   currency: "KD")
+                                   currency: "KD",
+                                   environment: URLHost.production)
         sdkBannerView?.delegate = self
         
      // Enable custom view for Banner installments

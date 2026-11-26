@@ -125,6 +125,11 @@ public struct CommonError : Swift::Codable {
   public func encode(to encoder: any Swift::Encoder) throws
   public init(from decoder: any Swift::Decoder) throws
 }
+final public class CheckoutSession : @unchecked Swift::Sendable {
+  public init(userName: Swift::String, password: Swift::String, clientId: Swift::String, clientSecret: Swift::String, accessToken: Swift::String = "", host: TalySdk::URLHost)
+  convenience public init(userName: Swift::String, password: Swift::String, clientId: Swift::String, clientSecret: Swift::String, accessToken: Swift::String = "")
+  @objc deinit
+}
 @_hasMissingDesignatedInitializers public class Utils {
   public static var token: Swift::String {
     get
@@ -211,9 +216,9 @@ public enum AppResult<T, A> {
 }
 public struct OrderResource {
   public init()
-  public func getToken(tokenRequest: TalySdk::TokenRequest) async throws -> TalySdk::AppResult<TalySdk::TokenResponse, TalySdk::CommonError>
-  public func createOrder(data: TalySdk::OrderRequest) async throws -> TalySdk::AppResult<TalySdk::CreateOrderResponse, TalySdk::OtherErrorResponse>
-  public func getOrderDetail(id: Swift::Int) async throws -> TalySdk::AppResult<TalySdk::OrderDetail, TalySdk::OtherErrorResponse>
+  public func getToken(tokenRequest: TalySdk::TokenRequest, auth: TalySdk::CheckoutSession) async throws -> TalySdk::AppResult<TalySdk::TokenResponse, TalySdk::CommonError>
+  public func createOrder(data: TalySdk::OrderRequest, auth: TalySdk::CheckoutSession) async throws -> TalySdk::AppResult<TalySdk::CreateOrderResponse, TalySdk::OtherErrorResponse>
+  public func getOrderDetail(id: Swift::Int, auth: TalySdk::CheckoutSession) async throws -> TalySdk::AppResult<TalySdk::OrderDetail, TalySdk::OtherErrorResponse>
 }
 public struct OrderDetail : Swift::Codable {
   public let orderToken: Swift::String
@@ -309,9 +314,11 @@ public struct TokenRequest : Swift::Codable {
   public let password: Swift::String
   public let grantType: Swift::String
   public let scope: Swift::String
-  public init(username: Swift::String, password: Swift::String, grantType: Swift::String, scope: Swift::String)
-  public func encode(to encoder: any Swift::Encoder) throws
+  public let clientId: Swift::String
+  public let clientSecret: Swift::String
+  public init(username: Swift::String, password: Swift::String, grantType: Swift::String, scope: Swift::String, clientId: Swift::String, clientSecret: Swift::String)
   public init(from decoder: any Swift::Decoder) throws
+  public func encode(to encoder: any Swift::Encoder) throws
 }
 public protocol MixpanelDelegate : AnyObject {
   func mixpanelWillFlush(_ mixpanel: TalySdk::MixpanelInstance) -> Swift::Bool
@@ -399,7 +406,7 @@ public class MXPanelViewModel {
   @objc deinit
 }
 extension TalySdk::MXPanelViewModel {
-  public func sdkInitialised()
+  public func sdkInitialised(merchantEmail: Swift::String, environment: Swift::String? = nil)
   public func authTokenServiceCalled()
   public func authTokenSuccess()
   public func authTokenFailure(errorCode: Swift::String, message: TalySdk::OtherErrorResponse)
@@ -435,7 +442,7 @@ public struct CreateOrderResponse : Swift::Codable {
 }
 public struct BannerResource {
   public init()
-  public func getBannerData(data: TalySdk::BannerRequest) async throws -> TalySdk::AppResult<[TalySdk::BannerResponse], TalySdk::CommonError>
+  public func getBannerData(data: TalySdk::BannerRequest, auth: TalySdk::CheckoutSession) async throws -> TalySdk::AppResult<[TalySdk::BannerResponse], TalySdk::CommonError>
 }
 public struct OrderRequest : Swift::Codable {
   public var merchantOrderId: Swift::String
@@ -501,7 +508,9 @@ extension Swift::String {
     get
     set
   }
-  @_Concurrency::MainActor @preconcurrency public init(frame: CoreFoundation::CGRect, userName: Swift::String, password: Swift::String, name: Swift::String, quantity: Swift::Int, amount: Swift::String, currency: Swift::String)
+  @_Concurrency::MainActor @preconcurrency public init(frame: CoreFoundation::CGRect, accessToken: Swift::String, name: Swift::String, quantity: Swift::Int, amount: Swift::String, currency: Swift::String, environment: TalySdk::URLHost)
+  @available(*, deprecated, message: "Obtain an access token on your server and use init(frame:accessToken:name:quantity:amount:currency:environment:). Do not put the merchant username or password in the customer app.")
+  @_Concurrency::MainActor @preconcurrency public init(frame: CoreFoundation::CGRect, userName: Swift::String, password: Swift::String, clientId: Swift::String, clientSecret: Swift::String, name: Swift::String, quantity: Swift::Int, amount: Swift::String, currency: Swift::String, environment: TalySdk::URLHost)
   @objc deinit
 }
 @_hasMissingDesignatedInitializers open class Group {
@@ -533,6 +542,8 @@ extension Swift::String {
     get
     set
   }
+  @_Concurrency::MainActor @preconcurrency public init(orderRequest: TalySdk::OrderRequest, accessToken: Swift::String, environment: TalySdk::URLHost, languageCode: Swift::String? = "en")
+  @available(*, deprecated, message: "Obtain an access token on your server and use init(orderRequest:accessToken:environment:). Do not put the merchant username or password in the customer app.")
   @_Concurrency::MainActor @preconcurrency public init(orderRequest: TalySdk::OrderRequest, tokenRequest: TalySdk::TokenRequest, environment: TalySdk::URLHost, languageCode: Swift::String? = "en")
   @objc deinit
   @_Concurrency::MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
@@ -588,7 +599,7 @@ public struct BannerRequest : Swift::Codable {
 }
 public struct WebServiceManager {
   public init()
-  public static func postApiData<T, A>(resource: TalySdk::WebResource, resultType: T.Type, errorType: A.Type, isRetry: Swift::Bool = false) async throws -> TalySdk::AppResult<T, A> where T : Swift::Decodable, A : Swift::Decodable, A : Swift::Encodable
+  public static func postApiData<T, A>(resource: TalySdk::WebResource, resultType: T.Type, errorType: A.Type, isRetry: Swift::Bool = false, auth: TalySdk::CheckoutSession? = nil, host: TalySdk::URLHost? = nil) async throws -> TalySdk::AppResult<T, A> where T : Swift::Decodable, A : Swift::Decodable, A : Swift::Encodable
 }
 public enum HttpMethods : Swift::String {
   case get

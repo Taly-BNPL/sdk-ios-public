@@ -1194,6 +1194,164 @@
       },
       {
         "kind": "TypeDecl",
+        "name": "CheckoutSession",
+        "printedName": "CheckoutSession",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(userName:password:clientId:clientSecret:accessToken:host:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CheckoutSession",
+                "printedName": "TalySdk.CheckoutSession",
+                "usr": "s:7TalySdk15CheckoutSessionC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "hasDefaultArg": true,
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URLHost",
+                "printedName": "TalySdk.URLHost",
+                "usr": "s:7TalySdk7URLHostO"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:7TalySdk15CheckoutSessionC8userName8password8clientId0H6Secret11accessToken4hostACSS_S4SAA7URLHostOtcfc",
+            "mangledName": "$s7TalySdk15CheckoutSessionC8userName8password8clientId0H6Secret11accessToken4hostACSS_S4SAA7URLHostOtcfc",
+            "moduleName": "TalySdk",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(userName:password:clientId:clientSecret:accessToken:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CheckoutSession",
+                "printedName": "TalySdk.CheckoutSession",
+                "usr": "s:7TalySdk15CheckoutSessionC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "hasDefaultArg": true,
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:7TalySdk15CheckoutSessionC8userName8password8clientId0H6Secret11accessTokenACSS_S4Stcfc",
+            "mangledName": "$s7TalySdk15CheckoutSessionC8userName8password8clientId0H6Secret11accessTokenACSS_S4Stcfc",
+            "moduleName": "TalySdk",
+            "declAttributes": [
+              "Convenience",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Convenience"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:7TalySdk15CheckoutSessionC",
+        "mangledName": "$s7TalySdk15CheckoutSessionC",
+        "moduleName": "TalySdk",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
         "name": "Utils",
         "printedName": "Utils",
         "children": [
@@ -1216,7 +1374,8 @@
             "static": true,
             "declAttributes": [
               "Final",
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "accessors": [
               {
@@ -3777,7 +3936,7 @@
           {
             "kind": "Function",
             "name": "getToken",
-            "printedName": "getToken(tokenRequest:)",
+            "printedName": "getToken(tokenRequest:auth:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -3804,11 +3963,17 @@
                 "name": "TokenRequest",
                 "printedName": "TalySdk.TokenRequest",
                 "usr": "s:7TalySdk12TokenRequestV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CheckoutSession",
+                "printedName": "TalySdk.CheckoutSession",
+                "usr": "s:7TalySdk15CheckoutSessionC"
               }
             ],
             "declKind": "Func",
-            "usr": "s:7TalySdk13OrderResourceV8getToken12tokenRequestAA9AppResultOyAA0F8ResponseVAA11CommonErrorVGAA0fH0V_tYaKF",
-            "mangledName": "$s7TalySdk13OrderResourceV8getToken12tokenRequestAA9AppResultOyAA0F8ResponseVAA11CommonErrorVGAA0fH0V_tYaKF",
+            "usr": "s:7TalySdk13OrderResourceV8getToken12tokenRequest4authAA9AppResultOyAA0F8ResponseVAA11CommonErrorVGAA0fH0V_AA15CheckoutSessionCtYaKF",
+            "mangledName": "$s7TalySdk13OrderResourceV8getToken12tokenRequest4authAA9AppResultOyAA0F8ResponseVAA11CommonErrorVGAA0fH0V_AA15CheckoutSessionCtYaKF",
             "moduleName": "TalySdk",
             "declAttributes": [
               "AccessControl"
@@ -3819,7 +3984,7 @@
           {
             "kind": "Function",
             "name": "createOrder",
-            "printedName": "createOrder(data:)",
+            "printedName": "createOrder(data:auth:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -3846,11 +4011,17 @@
                 "name": "OrderRequest",
                 "printedName": "TalySdk.OrderRequest",
                 "usr": "s:7TalySdk12OrderRequestV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CheckoutSession",
+                "printedName": "TalySdk.CheckoutSession",
+                "usr": "s:7TalySdk15CheckoutSessionC"
               }
             ],
             "declKind": "Func",
-            "usr": "s:7TalySdk13OrderResourceV06createC04dataAA9AppResultOyAA06CreateC8ResponseVAA010OtherErrorJ0VGAA0C7RequestV_tYaKF",
-            "mangledName": "$s7TalySdk13OrderResourceV06createC04dataAA9AppResultOyAA06CreateC8ResponseVAA010OtherErrorJ0VGAA0C7RequestV_tYaKF",
+            "usr": "s:7TalySdk13OrderResourceV06createC04data4authAA9AppResultOyAA06CreateC8ResponseVAA010OtherErrorK0VGAA0C7RequestV_AA15CheckoutSessionCtYaKF",
+            "mangledName": "$s7TalySdk13OrderResourceV06createC04data4authAA9AppResultOyAA06CreateC8ResponseVAA010OtherErrorK0VGAA0C7RequestV_AA15CheckoutSessionCtYaKF",
             "moduleName": "TalySdk",
             "declAttributes": [
               "AccessControl"
@@ -3861,7 +4032,7 @@
           {
             "kind": "Function",
             "name": "getOrderDetail",
-            "printedName": "getOrderDetail(id:)",
+            "printedName": "getOrderDetail(id:auth:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -3888,11 +4059,17 @@
                 "name": "Int",
                 "printedName": "Swift.Int",
                 "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CheckoutSession",
+                "printedName": "TalySdk.CheckoutSession",
+                "usr": "s:7TalySdk15CheckoutSessionC"
               }
             ],
             "declKind": "Func",
-            "usr": "s:7TalySdk13OrderResourceV03getC6Detail2idAA9AppResultOyAA0cF0VAA18OtherErrorResponseVGSi_tYaKF",
-            "mangledName": "$s7TalySdk13OrderResourceV03getC6Detail2idAA9AppResultOyAA0cF0VAA18OtherErrorResponseVGSi_tYaKF",
+            "usr": "s:7TalySdk13OrderResourceV03getC6Detail2id4authAA9AppResultOyAA0cF0VAA18OtherErrorResponseVGSi_AA15CheckoutSessionCtYaKF",
+            "mangledName": "$s7TalySdk13OrderResourceV03getC6Detail2id4authAA9AppResultOyAA0cF0VAA18OtherErrorResponseVGSi_AA15CheckoutSessionCtYaKF",
             "moduleName": "TalySdk",
             "declAttributes": [
               "AccessControl"
@@ -8242,9 +8419,97 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "clientId",
+            "printedName": "clientId",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:7TalySdk12TokenRequestV8clientIdSSvp",
+            "mangledName": "$s7TalySdk12TokenRequestV8clientIdSSvp",
+            "moduleName": "TalySdk",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:7TalySdk12TokenRequestV8clientIdSSvg",
+                "mangledName": "$s7TalySdk12TokenRequestV8clientIdSSvg",
+                "moduleName": "TalySdk",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "clientSecret",
+            "printedName": "clientSecret",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:7TalySdk12TokenRequestV12clientSecretSSvp",
+            "mangledName": "$s7TalySdk12TokenRequestV12clientSecretSSvp",
+            "moduleName": "TalySdk",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:7TalySdk12TokenRequestV12clientSecretSSvg",
+                "mangledName": "$s7TalySdk12TokenRequestV12clientSecretSSvg",
+                "moduleName": "TalySdk",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
             "kind": "Constructor",
             "name": "init",
-            "printedName": "init(username:password:grantType:scope:)",
+            "printedName": "init(username:password:grantType:scope:clientId:clientSecret:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -8275,14 +8540,27 @@
                 "name": "String",
                 "printedName": "Swift.String",
                 "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
               }
             ],
             "declKind": "Constructor",
-            "usr": "s:7TalySdk12TokenRequestV8username8password9grantType5scopeACSS_S3Stcfc",
-            "mangledName": "$s7TalySdk12TokenRequestV8username8password9grantType5scopeACSS_S3Stcfc",
+            "usr": "s:7TalySdk12TokenRequestV8username8password9grantType5scope8clientId0J6SecretACSS_S5Stcfc",
+            "mangledName": "$s7TalySdk12TokenRequestV8username8password9grantType5scope8clientId0J6SecretACSS_S5Stcfc",
             "moduleName": "TalySdk",
             "declAttributes": [
-              "AccessControl"
+              "AccessControl",
+              "RawDocComment"
             ],
             "init_kind": "Designated"
           },
@@ -8308,7 +8586,9 @@
             "usr": "s:7TalySdk12TokenRequestV4fromACs7Decoder_p_tKcfc",
             "mangledName": "$s7TalySdk12TokenRequestV4fromACs7Decoder_p_tKcfc",
             "moduleName": "TalySdk",
-            "implicit": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
             "throwing": true,
             "init_kind": "Designated"
           },
@@ -8333,7 +8613,9 @@
             "usr": "s:7TalySdk12TokenRequestV6encode2toys7Encoder_p_tKF",
             "mangledName": "$s7TalySdk12TokenRequestV6encode2toys7Encoder_p_tKF",
             "moduleName": "TalySdk",
-            "implicit": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
             "throwing": true,
             "funcSelfKind": "NonMutating"
           }
@@ -8343,7 +8625,8 @@
         "mangledName": "$s7TalySdk12TokenRequestV",
         "moduleName": "TalySdk",
         "declAttributes": [
-          "AccessControl"
+          "AccessControl",
+          "RawDocComment"
         ],
         "conformances": [
           {
@@ -11333,17 +11616,38 @@
           {
             "kind": "Function",
             "name": "sdkInitialised",
-            "printedName": "sdkInitialised()",
+            "printedName": "sdkInitialised(merchantEmail:environment:)",
             "children": [
               {
                 "kind": "TypeNominal",
                 "name": "Void",
                 "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Func",
-            "usr": "s:7TalySdk16MXPanelViewModelC14sdkInitialisedyyF",
-            "mangledName": "$s7TalySdk16MXPanelViewModelC14sdkInitialisedyyF",
+            "usr": "s:7TalySdk16MXPanelViewModelC14sdkInitialised13merchantEmail11environmentySS_SSSgtF",
+            "mangledName": "$s7TalySdk16MXPanelViewModelC14sdkInitialised13merchantEmail11environmentySS_SSSgtF",
             "moduleName": "TalySdk",
             "declAttributes": [
               "AccessControl"
@@ -12707,7 +13011,7 @@
           {
             "kind": "Function",
             "name": "getBannerData",
-            "printedName": "getBannerData(data:)",
+            "printedName": "getBannerData(data:auth:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -12742,11 +13046,17 @@
                 "name": "BannerRequest",
                 "printedName": "TalySdk.BannerRequest",
                 "usr": "s:7TalySdk13BannerRequestV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CheckoutSession",
+                "printedName": "TalySdk.CheckoutSession",
+                "usr": "s:7TalySdk15CheckoutSessionC"
               }
             ],
             "declKind": "Func",
-            "usr": "s:7TalySdk14BannerResourceV03getC4Data4dataAA9AppResultOySayAA0C8ResponseVGAA11CommonErrorVGAA0C7RequestV_tYaKF",
-            "mangledName": "$s7TalySdk14BannerResourceV03getC4Data4dataAA9AppResultOySayAA0C8ResponseVGAA11CommonErrorVGAA0C7RequestV_tYaKF",
+            "usr": "s:7TalySdk14BannerResourceV03getC4Data4data4authAA9AppResultOySayAA0C8ResponseVGAA11CommonErrorVGAA0C7RequestV_AA15CheckoutSessionCtYaKF",
+            "mangledName": "$s7TalySdk14BannerResourceV03getC4Data4data4authAA9AppResultOySayAA0C8ResponseVGAA11CommonErrorVGAA0C7RequestV_AA15CheckoutSessionCtYaKF",
             "moduleName": "TalySdk",
             "declAttributes": [
               "AccessControl"
@@ -16351,7 +16661,7 @@
           {
             "kind": "Constructor",
             "name": "init",
-            "printedName": "init(frame:userName:password:name:quantity:amount:currency:)",
+            "printedName": "init(frame:accessToken:name:quantity:amount:currency:environment:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -16364,6 +16674,84 @@
                 "name": "CGRect",
                 "printedName": "CoreFoundation.CGRect",
                 "usr": "c:@S@CGRect"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URLHost",
+                "printedName": "TalySdk.URLHost",
+                "usr": "s:7TalySdk7URLHostO"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:7TalySdk10BannerViewC5frame11accessToken4name8quantity6amount8currency11environmentACSo6CGRectV_S2SSiS2SAA7URLHostOtcfc",
+            "mangledName": "$s7TalySdk10BannerViewC5frame11accessToken4name8quantity6amount8currency11environmentACSo6CGRectV_S2SSiS2SAA7URLHostOtcfc",
+            "moduleName": "TalySdk",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(frame:userName:password:clientId:clientSecret:name:quantity:amount:currency:environment:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "BannerView",
+                "printedName": "TalySdk.BannerView",
+                "usr": "c:@M@TalySdk@objc(cs)BannerView"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CGRect",
+                "printedName": "CoreFoundation.CGRect",
+                "usr": "c:@S@CGRect"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
               },
               {
                 "kind": "TypeNominal",
@@ -16400,16 +16788,25 @@
                 "name": "String",
                 "printedName": "Swift.String",
                 "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URLHost",
+                "printedName": "TalySdk.URLHost",
+                "usr": "s:7TalySdk7URLHostO"
               }
             ],
             "declKind": "Constructor",
-            "usr": "s:7TalySdk10BannerViewC5frame8userName8password4name8quantity6amount8currencyACSo6CGRectV_S3SSiS2Stcfc",
-            "mangledName": "$s7TalySdk10BannerViewC5frame8userName8password4name8quantity6amount8currencyACSo6CGRectV_S3SSiS2Stcfc",
+            "usr": "s:7TalySdk10BannerViewC5frame8userName8password8clientId0I6Secret4name8quantity6amount8currency11environmentACSo6CGRectV_S5SSiS2SAA7URLHostOtcfc",
+            "mangledName": "$s7TalySdk10BannerViewC5frame8userName8password8clientId0I6Secret4name8quantity6amount8currency11environmentACSo6CGRectV_S5SSiS2SAA7URLHostOtcfc",
             "moduleName": "TalySdk",
+            "deprecated": true,
             "declAttributes": [
               "Preconcurrency",
               "Custom",
-              "AccessControl"
+              "AccessControl",
+              "Available",
+              "RawDocComment"
             ],
             "init_kind": "Designated"
           },
@@ -17490,6 +17887,63 @@
           {
             "kind": "Constructor",
             "name": "init",
+            "printedName": "init(orderRequest:accessToken:environment:languageCode:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "PlaceOrderView",
+                "printedName": "TalySdk.PlaceOrderView",
+                "usr": "c:@M@TalySdk@objc(cs)PlaceOrderView"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "OrderRequest",
+                "printedName": "TalySdk.OrderRequest",
+                "usr": "s:7TalySdk12OrderRequestV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URLHost",
+                "printedName": "TalySdk.URLHost",
+                "usr": "s:7TalySdk7URLHostO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:7TalySdk14PlaceOrderViewC12orderRequest11accessToken11environment12languageCodeAcA0dG0V_SSAA7URLHostOSSSgtcfc",
+            "mangledName": "$s7TalySdk14PlaceOrderViewC12orderRequest11accessToken11environment12languageCodeAcA0dG0V_SSAA7URLHostOSSSgtcfc",
+            "moduleName": "TalySdk",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
             "printedName": "init(orderRequest:tokenRequest:environment:languageCode:)",
             "children": [
               {
@@ -17536,10 +17990,13 @@
             "usr": "s:7TalySdk14PlaceOrderViewC12orderRequest05tokenG011environment12languageCodeAcA0dG0V_AA05TokenG0VAA7URLHostOSSSgtcfc",
             "mangledName": "$s7TalySdk14PlaceOrderViewC12orderRequest05tokenG011environment12languageCodeAcA0dG0V_AA05TokenG0VAA7URLHostOSSSgtcfc",
             "moduleName": "TalySdk",
+            "deprecated": true,
             "declAttributes": [
               "Preconcurrency",
               "Custom",
-              "AccessControl"
+              "AccessControl",
+              "Available",
+              "RawDocComment"
             ],
             "init_kind": "Designated"
           },
@@ -19285,7 +19742,7 @@
           {
             "kind": "Function",
             "name": "postApiData",
-            "printedName": "postApiData(resource:resultType:errorType:isRetry:)",
+            "printedName": "postApiData(resource:resultType:errorType:isRetry:auth:host:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -19341,11 +19798,41 @@
                 "printedName": "Swift.Bool",
                 "hasDefaultArg": true,
                 "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "TalySdk.CheckoutSession?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CheckoutSession",
+                    "printedName": "TalySdk.CheckoutSession",
+                    "usr": "s:7TalySdk15CheckoutSessionC"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "TalySdk.URLHost?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URLHost",
+                    "printedName": "TalySdk.URLHost",
+                    "usr": "s:7TalySdk7URLHostO"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Func",
-            "usr": "s:7TalySdk17WebServiceManagerV11postApiData8resource10resultType05errorK07isRetryAA9AppResultOyxq_GAA0C8ResourceV_xmq_mSbtYaKSeRzSeR_SER_r0_lFZ",
-            "mangledName": "$s7TalySdk17WebServiceManagerV11postApiData8resource10resultType05errorK07isRetryAA9AppResultOyxq_GAA0C8ResourceV_xmq_mSbtYaKSeRzSeR_SER_r0_lFZ",
+            "usr": "s:7TalySdk17WebServiceManagerV11postApiData8resource10resultType05errorK07isRetry4auth4hostAA9AppResultOyxq_GAA0C8ResourceV_xmq_mSbAA15CheckoutSessionCSgAA7URLHostOSgtYaKSeRzSeR_SER_r0_lFZ",
+            "mangledName": "$s7TalySdk17WebServiceManagerV11postApiData8resource10resultType05errorK07isRetry4auth4hostAA9AppResultOyxq_GAA0C8ResourceV_xmq_mSbAA15CheckoutSessionCSgAA7URLHostOSgtYaKSeRzSeR_SER_r0_lFZ",
             "moduleName": "TalySdk",
             "genericSig": "<τ_0_0, τ_0_1 where τ_0_0 : Swift.Decodable, τ_0_1 : Swift.Decodable, τ_0_1 : Swift.Encodable>",
             "sugared_genericSig": "<T, A where T : Swift.Decodable, A : Swift.Decodable, A : Swift.Encodable>",
@@ -27703,21 +28190,42 @@
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/Utils.swift",
       "kind": "StringLiteral",
-      "offset": 233,
+      "offset": 736,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/Utils.swift",
+      "kind": "StringLiteral",
+      "offset": 1263,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/Utils.swift",
+      "kind": "StringLiteral",
+      "offset": 3191,
+      "length": 7,
+      "value": "\"token\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/Utils.swift",
+      "kind": "StringLiteral",
+      "offset": 3244,
       "length": 10,
       "value": "\"password\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/Utils.swift",
       "kind": "StringLiteral",
-      "offset": 3521,
+      "offset": 6792,
       "length": 18,
       "value": "\"com.taly.TalySdk\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/Utils.swift",
       "kind": "StringLiteral",
-      "offset": 3573,
+      "offset": 6844,
       "length": 10,
       "value": "\"password\""
     },
@@ -27850,16 +28358,23 @@
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyModels\/OrderResource.swift",
       "kind": "StringLiteral",
-      "offset": 5931,
+      "offset": 6051,
       "length": 5,
       "value": "\"PSP\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyModels\/OrderResource.swift",
       "kind": "StringLiteral",
-      "offset": 11802,
+      "offset": 11922,
       "length": 5,
       "value": "\"PSP\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyModels\/OrderResource.swift",
+      "kind": "Array",
+      "offset": 14119,
+      "length": 123,
+      "value": "[\"CONFIRMED\", \"SUCCESS\", \"PAID\", \"COMPLETED\", \"SETTLED\", \"UNSETTLED\"]"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/Libraries\/Mixpanel\/MixpanelPersistence.swift",
@@ -27976,7 +28491,7 @@
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyModels\/TokenRequest.swift",
       "kind": "StringLiteral",
-      "offset": 602,
+      "offset": 1553,
       "length": 12,
       "value": "\"grant_type\""
     },
@@ -28361,56 +28876,56 @@
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/BannerFeature.swift",
       "kind": "BooleanLiteral",
-      "offset": 672,
+      "offset": 702,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/BannerFeature.swift",
       "kind": "BooleanLiteral",
-      "offset": 715,
+      "offset": 745,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/BannerFeature.swift",
       "kind": "BooleanLiteral",
-      "offset": 608,
+      "offset": 638,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/BannerFeature.swift",
       "kind": "IntegerLiteral",
-      "offset": 1770,
+      "offset": 3404,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/BannerFeature.swift",
       "kind": "IntegerLiteral",
-      "offset": 1806,
+      "offset": 3440,
       "length": 2,
       "value": "10"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/BannerFeature.swift",
       "kind": "StringLiteral",
-      "offset": 2225,
+      "offset": 3859,
       "length": 20,
       "value": "\"manrope_medium_500\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/BannerFeature.swift",
       "kind": "IntegerLiteral",
-      "offset": 2253,
+      "offset": 3887,
       "length": 2,
       "value": "14"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/BannerFeature.swift",
       "kind": "IntegerLiteral",
-      "offset": 2287,
+      "offset": 3921,
       "length": 1,
       "value": "0"
     },
@@ -28606,114 +29121,128 @@
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "BooleanLiteral",
-      "offset": 1326,
+      "offset": 1442,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "BooleanLiteral",
-      "offset": 1464,
+      "offset": 1580,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "BooleanLiteral",
-      "offset": 1515,
+      "offset": 1631,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "BooleanLiteral",
-      "offset": 1781,
+      "offset": 1897,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "FloatLiteral",
-      "offset": 1843,
+      "offset": 1959,
       "length": 4,
       "value": "0.95"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "FloatLiteral",
-      "offset": 1856,
+      "offset": 1972,
       "length": 4,
       "value": "0.96"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "FloatLiteral",
-      "offset": 1868,
+      "offset": 1984,
       "length": 4,
       "value": "0.97"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "IntegerLiteral",
-      "offset": 1881,
+      "offset": 1997,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "BooleanLiteral",
-      "offset": 2173,
+      "offset": 2289,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "BooleanLiteral",
-      "offset": 2657,
+      "offset": 2773,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "BooleanLiteral",
-      "offset": 2788,
+      "offset": 2904,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "IntegerLiteral",
-      "offset": 3016,
+      "offset": 3132,
       "length": 2,
       "value": "40"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "IntegerLiteral",
-      "offset": 3026,
+      "offset": 3142,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "IntegerLiteral",
-      "offset": 3036,
+      "offset": 3152,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "IntegerLiteral",
-      "offset": 3047,
+      "offset": 3163,
       "length": 2,
       "value": "35"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
       "kind": "StringLiteral",
-      "offset": 3332,
+      "offset": 3609,
       "length": 4,
       "value": "\"en\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
+      "kind": "StringLiteral",
+      "offset": 4642,
+      "length": 4,
+      "value": "\"en\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/PlaceOrderView.swift",
+      "kind": "Array",
+      "offset": 27161,
+      "length": 26,
+      "value": "[\"taly.io\", \"dev-taly.io\"]"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/PaymentOptionFeature\/KMIDDeepLinkHandler.swift",
@@ -28767,63 +29296,98 @@
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
       "kind": "StringLiteral",
-      "offset": 8086,
+      "offset": 9411,
       "length": 5,
       "value": "\"GET\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
       "kind": "StringLiteral",
-      "offset": 8108,
+      "offset": 9433,
       "length": 6,
       "value": "\"POST\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
       "kind": "StringLiteral",
-      "offset": 8224,
+      "offset": 9549,
       "length": 17,
       "value": "\"api.dev-taly.io\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
       "kind": "StringLiteral",
-      "offset": 8264,
+      "offset": 9589,
       "length": 13,
       "value": "\"api.taly.io\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
-      "kind": "StringLiteral",
-      "offset": 10221,
-      "length": 12,
-      "value": "\"Production\""
+      "kind": "Array",
+      "offset": 12566,
+      "length": 199,
+      "value": "[\"password\", \"passwd\", \"access_token\", \"refresh_token\", \"id_token\", \"client_secret\", \"authorization\", \"token\", \"secret\"]"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
       "kind": "StringLiteral",
-      "offset": 12080,
+      "offset": 12812,
+      "length": 94,
+      "value": "\"password|passwd|access_token|refresh_token|id_token|client_secret|authorization|token|secret\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
+      "kind": "StringLiteral",
+      "offset": 12986,
+      "length": 37,
+      "value": "\"(^|&)(\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
+      "kind": "StringLiteral",
+      "offset": 13015,
+      "length": 1,
+      "value": "\")=[^&]*\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
+      "kind": "StringLiteral",
+      "offset": 13153,
+      "length": 63,
+      "value": "\"\"(\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
+      "kind": "StringLiteral",
+      "offset": 13179,
+      "length": 1,
+      "value": "\")\"\\s*:\\s*\"(?:\\\\.|[^\"\\\\])*\"\""
+    },
+    {
+      "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
+      "kind": "StringLiteral",
+      "offset": 19185,
       "length": 14,
       "value": "\"access_token\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
       "kind": "StringLiteral",
-      "offset": 12120,
+      "offset": 19225,
       "length": 12,
       "value": "\"token_type\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
       "kind": "StringLiteral",
-      "offset": 12161,
+      "offset": 19266,
       "length": 15,
       "value": "\"refresh_token\""
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/WebServiceManager.swift",
       "kind": "StringLiteral",
-      "offset": 12202,
+      "offset": 19307,
       "length": 12,
       "value": "\"expires_in\""
     },
@@ -28844,14 +29408,14 @@
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/SSLPinning.swift",
       "kind": "IntegerLiteral",
-      "offset": 3737,
+      "offset": 4130,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/mohamedelmakkawy\/Desktop\/workspace\/taly\/sdk-ios\/TalySdk\/TalySdk\/io.talyServices\/PinningTaskDelegate.swift",
       "kind": "BooleanLiteral",
-      "offset": 606,
+      "offset": 837,
       "length": 5,
       "value": "false"
     },

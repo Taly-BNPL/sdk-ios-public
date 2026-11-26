@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TalySdk
 
 class LoginVC: UIViewController {
     
@@ -28,26 +29,21 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         
         self.navigationController?.isNavigationBarHidden = true
-        showPasswordButton.contentMode = .scaleAspectFit
-        if #available(iOS 13.0, *) {
-            showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        showPasswordButton.addTarget(self, action: #selector(showPasswordButtonTapped), for: .touchUpInside)
-        showPasswordButton.tintColor = .gray
+        User.deleteStoredMerchantSecrets()
+
+        // The storyboard password field is unused. Checkout takes a server access token only.
+        passwordTextField.isHidden = true
+        showPasswordButton.isHidden = true
+        textFieldValidationErrorLabelPassword.isHidden = true
         
         signInBtn.layer.cornerRadius = 10
         
         mailTextField.delegate = self
-        passwordTextField.delegate = self
-        
-        passwordTextField.layer.cornerRadius = 5
-        passwordTextField.clipsToBounds = true
-        passwordTextField.layer.borderWidth = 1.0
-        passwordTextField.layer.borderColor = UIColor.black.cgColor
-        passwordTextField.setLeftPaddingPoints(10)
+        mailTextField.placeholder = "Access token from your server"
+        mailTextField.isSecureTextEntry = true
+        mailTextField.autocapitalizationType = .none
+        mailTextField.autocorrectionType = .no
+        mailTextField.text = User.accessToken
         
         mailTextField.layer.cornerRadius = 5
         mailTextField.clipsToBounds = true
@@ -63,50 +59,22 @@ class LoginVC: UIViewController {
         devlopmentButton.backgroundColor = UIColor.hexStringToUIColor(hex: "#233756")
         devlopmentButton.setTitleColor(UIColor.white, for: .normal)
         productionButton.setTitleColor(UIColor.black, for: .normal)
-        
-        mailTextField.text = User.userName.isEmpty ? "DemoMerchant#153" : User.userName
-        let storedPassword = User.password
-        passwordTextField.text = (storedPassword.isEmpty || storedPassword == "Dem@Merch@nt#2023")
-            ? "kRBPAoThVzfofM7c02AZmsbGSPd7FNjD"
-            : storedPassword
-    }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    @objc private func showPasswordButtonTapped() {
-        passwordTextField.isSecureTextEntry.toggle()
-        let imageName = passwordTextField.isSecureTextEntry ? "eye" : "eye.slash"
-        if #available(iOS 13.0, *) {
-            showPasswordButton.setImage(UIImage(systemName: imageName), for: .normal)
-        } else {
-            // Fallback on earlier versions
-        }
+
+        Utils.environment = environment
     }
     
     @IBAction func loginBtnAction(_ sender: UIButton) {
-        if mailTextField.text?.isEmpty == true {
-            textFieldValidationErrorLabelMail.text = "Please enter email"
-        } else if passwordTextField.text?.isEmpty == true {
-            textFieldValidationErrorLabelMail.text = ""
-            textFieldValidationErrorLabelPassword.text = "Please enter Password"
-        } else {
-            textFieldValidationErrorLabelMail.text = ""
-            textFieldValidationErrorLabelPassword.text = ""
-            User.userName = mailTextField.text! 
-            User.password = passwordTextField.text!
+        let accessToken = mailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard !accessToken.isEmpty else {
+            textFieldValidationErrorLabelMail.text = "Please enter an access token"
+            return
+        }
+        textFieldValidationErrorLabelMail.text = ""
+        User.accessToken = accessToken
 
-            if let viewController = storyboard?.instantiateViewController(identifier: "ViewController") as? ViewController {
-                viewController.userData = UserData(userName: mailTextField.text!, password: passwordTextField.text!, environment: self.environment)
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }
-            
+        if let viewController = storyboard?.instantiateViewController(identifier: "ViewController") as? ViewController {
+            viewController.userData = UserData(accessToken: accessToken, environment: self.environment)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
@@ -115,16 +83,17 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func environmentBtnAction(_ sender: UIButton) {
-        if sender.titleLabel?.text == "Development" {
+        if sender == devlopmentButton {
             environment = "Development"
             productionButton.backgroundColor = UIColor.white
             productionButton.setTitleColor(UIColor.black, for: .normal)
-        } else if sender.titleLabel?.text == "Production" {
+        } else if sender == productionButton {
             environment = "Production"
             devlopmentButton.backgroundColor = UIColor.white
             devlopmentButton.setTitleColor(UIColor.black, for: .normal)
         }
-        
+
+        Utils.environment = environment
         sender.backgroundColor = UIColor.hexStringToUIColor(hex: "#233756")
         sender.setTitleColor(UIColor.white, for: .normal)
     }
@@ -132,16 +101,8 @@ class LoginVC: UIViewController {
 }
 
 extension LoginVC: UITextFieldDelegate {
-    // text field Delegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let nextTage=textField.tag+1;
-        let nextResponder=textField.superview?.viewWithTag(nextTage) as UIResponder?
-        if (nextResponder != nil){
-            nextResponder?.becomeFirstResponder()
-        }
-        else{
-            textField.resignFirstResponder()
-        }
+        textField.resignFirstResponder()
         return false
     }
     
@@ -160,13 +121,6 @@ extension LoginVC: UITextFieldDelegate {
 }
 
 struct UserData {
-    var userName: String
-    var password: String
+    var accessToken: String
     var environment: String
-    
-    init(userName: String, password: String, environment: String) {
-        self.userName = userName
-        self.password = password
-        self.environment = environment
-    }
 }
