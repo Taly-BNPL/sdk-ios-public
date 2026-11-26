@@ -90,7 +90,10 @@ class ViewController: UIViewController, BannerViewDelegate {
     func setupBannerView() {
         sdkBannerView = BannerView(
             frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 58),
-            accessToken: userData.accessToken,
+            userName: userData.merchantKey,
+            password: userData.merchantSecret,
+            clientId: userData.clientId,
+            clientSecret: userData.clientSecret,
             name: "",
             quantity: 1,
             amount: "",
@@ -212,8 +215,17 @@ class ViewController: UIViewController, BannerViewDelegate {
             
             let orderRequest = OrderRequest(merchantOrderId: merchantId, language: Locale.current.languageCode ?? "en", subtotal: amount, totalAmount: amount, currency: "KWD", discountAmount: 0.00, taxAmount: 0.000, deliveryAmount: 0.000, deliveryMethod: "home delivery", otherFees: 0.00, psp: psp, orderItems: [orderItem], isDigitalOrder: false, customerDetails: customerDetail, deliveryAddress: deliveryAddress, merchantRedirectURL: "https://yourmerchant.com/checkout/", postBackUrl: "https://yourmerchant.com/yourWebwebhookEndpoint/",
                                             merchantLogo: "https://www.yourmerchant.com/media/merchantLogo.png")
+
+            let tokenRequest = TokenRequest(
+                username: userData.merchantKey,
+                password: userData.merchantSecret,
+                grantType: "password",
+                scope: "api",
+                clientId: userData.clientId,
+                clientSecret: userData.clientSecret
+            )
             
-            let viewController = PlaceOrderView(orderRequest: orderRequest, accessToken: userData.accessToken, environment: apiHost)
+            let viewController = PlaceOrderView(orderRequest: orderRequest, tokenRequest: tokenRequest, environment: apiHost)
 
             viewController.activityIndicatorColor = .themeColor
             viewController.delegate = self

@@ -10,30 +10,48 @@ import Security
 
 class User {
     private static let userDefaults = UserDefaults.standard
-    private static let accessTokenAccount = "checkoutAccessToken"
 
-    /// Short-lived bearer token from the merchant server. The demo does not store a merchant password.
-    static var accessToken: String {
-        get {
-            KeychainSecret.read(account: accessTokenAccount) ?? ""
-        }
-        set {
-            if newValue.isEmpty {
-                KeychainSecret.delete(account: accessTokenAccount)
-            } else {
-                KeychainSecret.save(newValue, account: accessTokenAccount)
-            }
-        }
+    static var merchantKey: String {
+        get { secret(account: "merchantKey") }
+        set { setSecret(newValue, account: "merchantKey") }
     }
 
-    /// Drops merchant passwords saved by older demo builds.
-    static func deleteStoredMerchantSecrets() {
+    static var merchantSecret: String {
+        get { secret(account: "merchantSecret") }
+        set { setSecret(newValue, account: "merchantSecret") }
+    }
+
+    static var clientId: String {
+        get { secret(account: "clientId") }
+        set { setSecret(newValue, account: "clientId") }
+    }
+
+    static var clientSecret: String {
+        get { secret(account: "clientSecret") }
+        set { setSecret(newValue, account: "clientSecret") }
+    }
+
+    /// Drops credentials saved in UserDefaults by older demo builds.
+    static func deleteLegacyUserDefaultsSecrets() {
         userDefaults.removeObject(forKey: "password")
         userDefaults.removeObject(forKey: "userName")
         userDefaults.removeObject(forKey: "clientId")
+        userDefaults.removeObject(forKey: "clientSecret")
+        KeychainSecret.delete(account: "checkoutAccessToken")
         KeychainSecret.delete(account: "merchantPassword")
-        KeychainSecret.delete(account: "merchantClientSecret")
         KeychainSecret.delete(account: "password")
+    }
+
+    private static func secret(account: String) -> String {
+        KeychainSecret.read(account: account) ?? ""
+    }
+
+    private static func setSecret(_ value: String, account: String) {
+        if value.isEmpty {
+            KeychainSecret.delete(account: account)
+        } else {
+            KeychainSecret.save(value, account: account)
+        }
     }
 }
 
