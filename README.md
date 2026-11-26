@@ -23,22 +23,25 @@ The example app serves as a simple online shopping application that highlights t
 ## 2. Initialize io.taly
 Import TalySdk into viewController, and initialize TalySdk with
 
-   Begin by initializing the Taly SDK with the necessary credentials. You'll need the following information:
-
-   * **Username**: Your username for authentication.
-   * **Password**: Your password for authentication.
-   * **Environment**: Choose between Environment.Development for development and testing, or Environment.Production for the live app. 
+   * **Merchant Key**: Your merchant API key.
+   * **Merchant Secret**: Your merchant API secret.
+   * **Client ID**: Per-merchant OAuth client id from the Taly merchant portal (`mapi_...`). Use the Development or Production client that matches `environment`.
+   * **Client Secret**: Matching per-merchant OAuth client secret from the portal.
+   * **Environment**: Choose between Environment.Development for development and testing, or Environment.Production for the live app.
 
 ```swift
 import TalySdk
 
 func xyzMethod() {
 ...
-    // Replace the following lines with your actual data
-    
-    let tokenRequest = TokenRequest(username: "YOUR_USER_NAME",                                 password: "YOUR_PASSWORD", 
-                                    grantType: "password", 
-                                    scope: "api")
+    let tokenRequest = TokenRequest(
+        username: "YOUR_MERCHANT_KEY",
+        password: "YOUR_MERCHANT_SECRET",
+        grantType: "password",
+        scope: "api",
+        clientId: "YOUR_CLIENT_ID",
+        clientSecret: "YOUR_CLIENT_SECRET"
+    )
 
     let psp = PSP(isPspOrder: true, 
                   pspProvider: "",
@@ -98,7 +101,7 @@ func xyzMethod() {
                                     postBackUrl: "https://yourmerchant.com/yourWebwebhookEndpoint/",
                                     merchantLogo: "https://www.yourmerchant.com/media/merchantLogo.png")
 
-    let viewController = PlaceOrderView(orderRequest:orderRequest,
+    let viewController = PlaceOrderView(orderRequest: orderRequest,
                                         tokenRequest: tokenRequest,
                                         environment: userData.environment == "Development" ? URLHost.dev : URLHost.production)
 
@@ -145,12 +148,15 @@ Integrate the Banner view into your Product Detail screen to offer users a compr
 
     ```
     var sdkBannerView = BannerView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 58),
-                                   userName: "YOUR_USER_NAME",
-                                   password: "YOUR_PASSWORD",
+                                   userName: "YOUR_MERCHANT_KEY",
+                                   password: "YOUR_MERCHANT_SECRET",
+                                   clientId: "YOUR_CLIENT_ID",
+                                   clientSecret: "YOUR_CLIENT_SECRET",
                                    name: "",
                                    quantity: 1,
                                    amount: "YOUR_AMOUNT",
-                                   currency: "KD")
+                                   currency: "KD",
+                                   environment: URLHost.production)
         sdkBannerView?.delegate = self
         
      // Enable custom view for Banner installments

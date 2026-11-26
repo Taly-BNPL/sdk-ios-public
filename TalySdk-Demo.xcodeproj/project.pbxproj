@@ -27,18 +27,18 @@
 		2ABAA4BF2A948ED40051D6AE /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABAA4BB2A948ED40051D6AE /* LoginVC.swift */; };
 		2ABAA4C02A948ED40051D6AE /* TalyInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABAA4BC2A948ED40051D6AE /* TalyInfoVC.swift */; };
 		2AE995BF2AA89251009666C3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE995BE2AA89251009666C3 /* User.swift */; };
-		9350185530B6279D00E5D660 /* TalySdk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9350182F30B373D100E5D660 /* TalySdk.xcframework */; };
-		9350185630B6279D00E5D660 /* TalySdk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9350182F30B373D100E5D660 /* TalySdk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9350185930B6375600E5D660 /* TalySdk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9350185830B6375600E5D660 /* TalySdk.xcframework */; };
+		9350185A30B6375600E5D660 /* TalySdk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9350185830B6375600E5D660 /* TalySdk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9350185730B6279D00E5D660 /* Embed Frameworks */ = {
+		9350185B30B6375600E5D660 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9350185630B6279D00E5D660 /* TalySdk.xcframework in Embed Frameworks */,
+				9350185A30B6375600E5D660 /* TalySdk.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,7 +68,7 @@
 		2ABAA4BB2A948ED40051D6AE /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		2ABAA4BC2A948ED40051D6AE /* TalyInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalyInfoVC.swift; sourceTree = "<group>"; };
 		2AE995BE2AA89251009666C3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		9350182F30B373D100E5D660 /* TalySdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TalySdk.xcframework; sourceTree = "<group>"; };
+		9350185830B6375600E5D660 /* TalySdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TalySdk.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9350185530B6279D00E5D660 /* TalySdk.xcframework in Frameworks */,
+				9350185930B6375600E5D660 /* TalySdk.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +152,7 @@
 		1FCB3E8B2A93446E0075FAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9350182F30B373D100E5D660 /* TalySdk.xcframework */,
+				9350185830B6375600E5D660 /* TalySdk.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -194,7 +194,7 @@
 				1FCB3E552A9336B90075FAD6 /* Sources */,
 				1FCB3E562A9336B90075FAD6 /* Frameworks */,
 				1FCB3E572A9336B90075FAD6 /* Resources */,
-				9350185730B6279D00E5D660 /* Embed Frameworks */,
+				9350185B30B6375600E5D660 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

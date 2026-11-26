@@ -10,59 +10,55 @@ import Security
 
 class User {
     private static let userDefaults = UserDefaults.standard
-    private static let legacyPasswordKey = "password"
 
-    static var userName: String {
-        get {
-            return userDefaults.string(forKey: "userName") ?? ""
-        }
-        set {
-            userDefaults.set(newValue, forKey: "userName")
-        }
+    static var merchantKey: String {
+        get { secret(account: "merchantKey") }
+        set { setSecret(newValue, account: "merchantKey") }
     }
 
-    static var password: String {
-        get {
-            if let storedPassword = KeychainPassword.read() {
-                deleteLegacyPassword()
-                return storedPassword
-            }
-
-            let legacyPassword = userDefaults.string(forKey: legacyPasswordKey) ?? ""
-            if legacyPassword.isEmpty {
-                return ""
-            }
-
-            if KeychainPassword.save(legacyPassword) {
-                deleteLegacyPassword()
-            }
-            return legacyPassword
-        }
-        set {
-            deleteLegacyPassword()
-            if newValue.isEmpty {
-                KeychainPassword.delete()
-            } else {
-                KeychainPassword.save(newValue)
-            }
-        }
+    static var merchantSecret: String {
+        get { secret(account: "merchantSecret") }
+        set { setSecret(newValue, account: "merchantSecret") }
     }
 
-    /// Removes a password written by older builds. UserDefaults stores this value in plaintext.
-    private static func deleteLegacyPassword() {
-        guard userDefaults.object(forKey: legacyPasswordKey) != nil else {
-            return
-        }
-        userDefaults.removeObject(forKey: legacyPasswordKey)
+    static var clientId: String {
+        get { secret(account: "clientId") }
+        set { setSecret(newValue, account: "clientId") }
     }
 
+    static var clientSecret: String {
+        get { secret(account: "clientSecret") }
+        set { setSecret(newValue, account: "clientSecret") }
+    }
+
+    /// Drops credentials saved in UserDefaults by older demo builds.
+    static func deleteLegacyUserDefaultsSecrets() {
+        userDefaults.removeObject(forKey: "password")
+        userDefaults.removeObject(forKey: "userName")
+        userDefaults.removeObject(forKey: "clientId")
+        userDefaults.removeObject(forKey: "clientSecret")
+        KeychainSecret.delete(account: "checkoutAccessToken")
+        KeychainSecret.delete(account: "merchantPassword")
+        KeychainSecret.delete(account: "password")
+    }
+
+    private static func secret(account: String) -> String {
+        KeychainSecret.read(account: account) ?? ""
+    }
+
+    private static func setSecret(_ value: String, account: String) {
+        if value.isEmpty {
+            KeychainSecret.delete(account: account)
+        } else {
+            KeychainSecret.save(value, account: account)
+        }
+    }
 }
 
-private enum KeychainPassword {
+private enum KeychainSecret {
     private static let service = "com.Taly.sdkTest"
-    private static let account = "merchantPassword"
 
-    private static var query: [String: Any] {
+    private static func query(account: String) -> [String: Any] {
         [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -70,8 +66,8 @@ private enum KeychainPassword {
         ]
     }
 
-    static func read() -> String? {
-        var readQuery = query
+    static func read(account: String) -> String? {
+        var readQuery = query(account: account)
         readQuery[kSecReturnData as String] = true
         readQuery[kSecMatchLimit as String] = kSecMatchLimitOne
 
@@ -84,14 +80,15 @@ private enum KeychainPassword {
     }
 
     @discardableResult
-    static func save(_ password: String) -> Bool {
-        let data = Data(password.utf8)
+    static func save(_ secret: String, account: String) -> Bool {
+        let data = Data(secret.utf8)
         let attributes: [String: Any] = [
             kSecValueData as String: data,
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
         ]
 
-        let updateStatus = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+        let baseQuery = query(account: account)
+        let updateStatus = SecItemUpdate(baseQuery as CFDictionary, attributes as CFDictionary)
         if updateStatus == errSecSuccess {
             return true
         }
@@ -99,14 +96,14 @@ private enum KeychainPassword {
             return false
         }
 
-        var addQuery = query
+        var addQuery = baseQuery
         for (key, value) in attributes {
             addQuery[key] = value
         }
         return SecItemAdd(addQuery as CFDictionary, nil) == errSecSuccess
     }
 
-    static func delete() {
-        SecItemDelete(query as CFDictionary)
+    static func delete(account: String) {
+        SecItemDelete(query(account: account) as CFDictionary)
     }
 }

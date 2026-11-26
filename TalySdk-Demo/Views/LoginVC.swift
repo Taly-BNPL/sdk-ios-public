@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TalySdk
 
 class LoginVC: UIViewController {
     
@@ -22,38 +23,32 @@ class LoginVC: UIViewController {
     @IBOutlet weak var enviromentView: UIView!
     @IBOutlet weak var devlopmentButton: UIButton!
     @IBOutlet weak var productionButton: UIButton!
+
+    private let clientIdTextField = UITextField()
+    private let clientSecretTextField = UITextField()
+    private let credentialErrorLabel = UILabel()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.isNavigationBarHidden = true
+        User.deleteLegacyUserDefaultsSecrets()
+
         showPasswordButton.contentMode = .scaleAspectFit
-        if #available(iOS 13.0, *) {
-            showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
-        } else {
-            // Fallback on earlier versions
-        }
-        
+        showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
         showPasswordButton.addTarget(self, action: #selector(showPasswordButtonTapped), for: .touchUpInside)
         showPasswordButton.tintColor = .gray
         
         signInBtn.layer.cornerRadius = 10
         
-        mailTextField.delegate = self
-        passwordTextField.delegate = self
-        
-        passwordTextField.layer.cornerRadius = 5
-        passwordTextField.clipsToBounds = true
-        passwordTextField.layer.borderWidth = 1.0
-        passwordTextField.layer.borderColor = UIColor.black.cgColor
-        passwordTextField.setLeftPaddingPoints(10)
-        
-        mailTextField.layer.cornerRadius = 5
-        mailTextField.clipsToBounds = true
-        mailTextField.layer.borderWidth = 1.0
-        mailTextField.layer.borderColor = UIColor.black.cgColor
-        mailTextField.setLeftPaddingPoints(10)
+        styleField(mailTextField, placeholder: "Merchant Key", isSecure: false)
+        styleField(passwordTextField, placeholder: "Merchant Secret", isSecure: true)
+        mailTextField.text = User.merchantKey
+        passwordTextField.text = User.merchantSecret
+        mailTextField.keyboardType = .default
+        mailTextField.tag = 0
+        passwordTextField.tag = 1
         
         enviromentView.layer.cornerRadius = 5
         enviromentView.clipsToBounds = true
@@ -63,50 +58,120 @@ class LoginVC: UIViewController {
         devlopmentButton.backgroundColor = UIColor.hexStringToUIColor(hex: "#233756")
         devlopmentButton.setTitleColor(UIColor.white, for: .normal)
         productionButton.setTitleColor(UIColor.black, for: .normal)
-        
-        mailTextField.text = User.userName.isEmpty ? "DemoMerchant#153" : User.userName
-        let storedPassword = User.password
-        passwordTextField.text = (storedPassword.isEmpty || storedPassword == "Dem@Merch@nt#2023")
-            ? "kRBPAoThVzfofM7c02AZmsbGSPd7FNjD"
-            : storedPassword
+
+        setupClientCredentialFields()
+        Utils.environment = environment
     }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
+
+    private func setupClientCredentialFields() {
+        guard let container = passwordTextField.superview else { return }
+
+        styleField(clientIdTextField, placeholder: "Client ID", isSecure: false)
+        styleField(clientSecretTextField, placeholder: "Client Secret", isSecure: true)
+        clientIdTextField.text = User.clientId
+        clientSecretTextField.text = User.clientSecret
+        clientIdTextField.tag = 2
+        clientSecretTextField.tag = 3
+
+        credentialErrorLabel.translatesAutoresizingMaskIntoConstraints = false
+        credentialErrorLabel.font = UIFont(name: "Manrope-Regular", size: 14)
+        credentialErrorLabel.textColor = .systemRed
+        credentialErrorLabel.numberOfLines = 0
+        credentialErrorLabel.text = ""
+
+        container.addSubview(clientIdTextField)
+        container.addSubview(clientSecretTextField)
+        container.addSubview(credentialErrorLabel)
+
+        for constraint in container.constraints {
+            if constraint.firstItem as? UIView == enviromentView, constraint.firstAttribute == .top {
+                constraint.isActive = false
+            }
+            if constraint.firstAttribute == .height, constraint.firstItem as? UIView == container {
+                constraint.constant = 540
+            }
+        }
+
+        NSLayoutConstraint.activate([
+            clientIdTextField.topAnchor.constraint(equalTo: textFieldValidationErrorLabelPassword.bottomAnchor, constant: 15),
+            clientIdTextField.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            clientIdTextField.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+            clientIdTextField.heightAnchor.constraint(equalToConstant: 45),
+            clientSecretTextField.topAnchor.constraint(equalTo: clientIdTextField.bottomAnchor, constant: 15),
+            clientSecretTextField.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            clientSecretTextField.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+            clientSecretTextField.heightAnchor.constraint(equalToConstant: 45),
+            credentialErrorLabel.topAnchor.constraint(equalTo: clientSecretTextField.bottomAnchor, constant: 5),
+            credentialErrorLabel.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            credentialErrorLabel.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+            enviromentView.topAnchor.constraint(equalTo: credentialErrorLabel.bottomAnchor, constant: 15)
+        ])
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+
+    private func styleField(_ field: UITextField, placeholder: String, isSecure: Bool) {
+        field.delegate = self
+        field.placeholder = placeholder
+        field.isSecureTextEntry = isSecure
+        field.isHidden = false
+        field.autocapitalizationType = .none
+        field.autocorrectionType = .no
+        field.layer.cornerRadius = 5
+        field.clipsToBounds = true
+        field.layer.borderWidth = 1.0
+        field.layer.borderColor = UIColor.black.cgColor
+        field.setLeftPaddingPoints(10)
+        if field.translatesAutoresizingMaskIntoConstraints {
+            field.translatesAutoresizingMaskIntoConstraints = false
+        }
     }
     
     @objc private func showPasswordButtonTapped() {
         passwordTextField.isSecureTextEntry.toggle()
         let imageName = passwordTextField.isSecureTextEntry ? "eye" : "eye.slash"
-        if #available(iOS 13.0, *) {
-            showPasswordButton.setImage(UIImage(systemName: imageName), for: .normal)
-        } else {
-            // Fallback on earlier versions
-        }
+        showPasswordButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
     @IBAction func loginBtnAction(_ sender: UIButton) {
-        if mailTextField.text?.isEmpty == true {
-            textFieldValidationErrorLabelMail.text = "Please enter email"
-        } else if passwordTextField.text?.isEmpty == true {
-            textFieldValidationErrorLabelMail.text = ""
-            textFieldValidationErrorLabelPassword.text = "Please enter Password"
-        } else {
-            textFieldValidationErrorLabelMail.text = ""
-            textFieldValidationErrorLabelPassword.text = ""
-            User.userName = mailTextField.text! 
-            User.password = passwordTextField.text!
+        let merchantKey = mailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let merchantSecret = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let clientId = clientIdTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let clientSecret = clientSecretTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
-            if let viewController = storyboard?.instantiateViewController(identifier: "ViewController") as? ViewController {
-                viewController.userData = UserData(userName: mailTextField.text!, password: passwordTextField.text!, environment: self.environment)
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }
-            
+        textFieldValidationErrorLabelMail.text = ""
+        textFieldValidationErrorLabelPassword.text = ""
+        credentialErrorLabel.text = ""
+
+        if merchantKey.isEmpty {
+            textFieldValidationErrorLabelMail.text = "Please enter Merchant Key"
+            return
+        }
+        if merchantSecret.isEmpty {
+            textFieldValidationErrorLabelPassword.text = "Please enter Merchant Secret"
+            return
+        }
+        if clientId.isEmpty {
+            credentialErrorLabel.text = "Please enter Client ID"
+            return
+        }
+        if clientSecret.isEmpty {
+            credentialErrorLabel.text = "Please enter Client Secret"
+            return
+        }
+
+        User.merchantKey = merchantKey
+        User.merchantSecret = merchantSecret
+        User.clientId = clientId
+        User.clientSecret = clientSecret
+
+        if let viewController = storyboard?.instantiateViewController(identifier: "ViewController") as? ViewController {
+            viewController.userData = UserData(
+                merchantKey: merchantKey,
+                merchantSecret: merchantSecret,
+                clientId: clientId,
+                clientSecret: clientSecret,
+                environment: self.environment
+            )
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
@@ -115,16 +180,17 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func environmentBtnAction(_ sender: UIButton) {
-        if sender.titleLabel?.text == "Development" {
+        if sender == devlopmentButton {
             environment = "Development"
             productionButton.backgroundColor = UIColor.white
             productionButton.setTitleColor(UIColor.black, for: .normal)
-        } else if sender.titleLabel?.text == "Production" {
+        } else if sender == productionButton {
             environment = "Production"
             devlopmentButton.backgroundColor = UIColor.white
             devlopmentButton.setTitleColor(UIColor.black, for: .normal)
         }
-        
+
+        Utils.environment = environment
         sender.backgroundColor = UIColor.hexStringToUIColor(hex: "#233756")
         sender.setTitleColor(UIColor.white, for: .normal)
     }
@@ -132,14 +198,12 @@ class LoginVC: UIViewController {
 }
 
 extension LoginVC: UITextFieldDelegate {
-    // text field Delegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let nextTage=textField.tag+1;
-        let nextResponder=textField.superview?.viewWithTag(nextTage) as UIResponder?
-        if (nextResponder != nil){
+        let nextTag = textField.tag + 1
+        let nextResponder = textField.superview?.viewWithTag(nextTag) as UIResponder?
+        if nextResponder != nil {
             nextResponder?.becomeFirstResponder()
-        }
-        else{
+        } else {
             textField.resignFirstResponder()
         }
         return false
@@ -160,13 +224,9 @@ extension LoginVC: UITextFieldDelegate {
 }
 
 struct UserData {
-    var userName: String
-    var password: String
+    var merchantKey: String
+    var merchantSecret: String
+    var clientId: String
+    var clientSecret: String
     var environment: String
-    
-    init(userName: String, password: String, environment: String) {
-        self.userName = userName
-        self.password = password
-        self.environment = environment
-    }
 }

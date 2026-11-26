@@ -55,6 +55,7 @@ class ViewController: UIViewController, BannerViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Utils.environment = userData.environment
         self.setupOtherViews()
         self.setupBannerView()
     }
@@ -87,7 +88,18 @@ class ViewController: UIViewController, BannerViewDelegate {
     }
     
     func setupBannerView() {
-        sdkBannerView = BannerView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 58), userName: userData.userName, password: userData.password, name: "", quantity: 1, amount: "", currency: "KD")
+        sdkBannerView = BannerView(
+            frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 58),
+            userName: userData.merchantKey,
+            password: userData.merchantSecret,
+            clientId: userData.clientId,
+            clientSecret: userData.clientSecret,
+            name: "",
+            quantity: 1,
+            amount: "",
+            currency: "KD",
+            environment: apiHost
+        )
         // sdkBannerView?.isShowCustomView = true
         sdkBannerView?.delegate = self
         self.bannerView.addSubview(sdkBannerView!)
@@ -185,11 +197,14 @@ class ViewController: UIViewController, BannerViewDelegate {
             self.setupDataOnTextFieldValueChanged()
             textFieldValidationErrorLabel.text = "Amount should be greater than 1 and less than 5"
         } else {
-            
-            let tokenRequest = TokenRequest(username: userData.userName, password: userData.password, grantType: "password", scope: "api")
-            
+            // Fees are zero in this demo, so subtotal, item price, and total must match the entered amount.
+            guard let amount = Double(textField.text ?? "") else {
+                textFieldValidationErrorLabel.text = "Please enter amount"
+                return
+            }
+
             let psp = PSP(isPspOrder: true, pspProvider: "", subMerchantId: 0, subMerchantName: "")
-            let orderItem = OrderItem(sku: "23433312436", type: "Digital", name: "lue shirt 998", itemDescription: "t-shirt made of cotton", quantity: 1, itemPrice: Double(self.textField.text!) ?? 0.00, imageUrl: "https://www.merchantwebsite.com/item1image.jpg", itemUrl: "https://www.merchantwebsite.com/item1.html", itemUnit: "gm", itemSize: "32", itemColor: "white", itemGender: "kids", itemBrand: "Adidas", itemCategory: "Men>Men's Shoes>Running", currency: "KWD")
+            let orderItem = OrderItem(sku: "23433312436", type: "Digital", name: "lue shirt 998", itemDescription: "t-shirt made of cotton", quantity: 1, itemPrice: amount, imageUrl: "https://www.merchantwebsite.com/item1image.jpg", itemUrl: "https://www.merchantwebsite.com/item1.html", itemUnit: "gm", itemSize: "32", itemColor: "white", itemGender: "kids", itemBrand: "Adidas", itemCategory: "Men>Men's Shoes>Running", currency: "KWD")
             
             let customerDetail = CustomerDetails(firstName: "Ahmaa", lastName: "Ali", gender: "Male", phoneNumber: "502223333", customerEmail: "user@example.com", registeredSince: "2023-07-22", loyaltyMember: true, loyaltyLevel: "VIP")
             
@@ -198,10 +213,19 @@ class ViewController: UIViewController, BannerViewDelegate {
             
             let merchantId = duplicateMerchantOrderIdTextField.text?.isEmpty == true ? getCurrentTimeInMilliseconds() :  duplicateMerchantOrderIdTextField.text!
             
-            let orderRequest = OrderRequest(merchantOrderId: merchantId, language: Locale.current.languageCode ?? "en", subtotal: 1.00, totalAmount: 20 ?? 0, currency: "KWD", discountAmount: 0.00, taxAmount: 0.000, deliveryAmount: 0.000, deliveryMethod: "home delivery", otherFees: 0.00, psp: psp, orderItems: [orderItem], isDigitalOrder: false, customerDetails: customerDetail, deliveryAddress: deliveryAddress, merchantRedirectURL: "https://yourmerchant.com/checkout/", postBackUrl: "https://yourmerchant.com/yourWebwebhookEndpoint/",
+            let orderRequest = OrderRequest(merchantOrderId: merchantId, language: Locale.current.languageCode ?? "en", subtotal: amount, totalAmount: amount, currency: "KWD", discountAmount: 0.00, taxAmount: 0.000, deliveryAmount: 0.000, deliveryMethod: "home delivery", otherFees: 0.00, psp: psp, orderItems: [orderItem], isDigitalOrder: false, customerDetails: customerDetail, deliveryAddress: deliveryAddress, merchantRedirectURL: "https://yourmerchant.com/checkout/", postBackUrl: "https://yourmerchant.com/yourWebwebhookEndpoint/",
                                             merchantLogo: "https://www.yourmerchant.com/media/merchantLogo.png")
+
+            let tokenRequest = TokenRequest(
+                username: userData.merchantKey,
+                password: userData.merchantSecret,
+                grantType: "password",
+                scope: "api",
+                clientId: userData.clientId,
+                clientSecret: userData.clientSecret
+            )
             
-            let viewController = PlaceOrderView(orderRequest: orderRequest, tokenRequest: tokenRequest, environment: userData.environment == "Development" ? URLHost.dev : URLHost.production)
+            let viewController = PlaceOrderView(orderRequest: orderRequest, tokenRequest: tokenRequest, environment: apiHost)
 
             viewController.activityIndicatorColor = .themeColor
             viewController.delegate = self
@@ -215,6 +239,10 @@ class ViewController: UIViewController, BannerViewDelegate {
         }
     }
     
+    private var apiHost: URLHost {
+        userData.environment == "Development" ? URLHost.dev : URLHost.production
+    }
+
     func getCurrentTimeInMilliseconds() -> String {
         let currentTime = Date().timeIntervalSince1970 * 1000
         let currentTimeString = String(format: "%.0f", currentTime)
